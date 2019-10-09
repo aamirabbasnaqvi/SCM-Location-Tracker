@@ -1,0 +1,42 @@
+.add-detail-page {
+
+    padding-top: 20px;
+
+    .add-detail-inputs {
+
+        select,
+        button {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    }
+
+    %visible-status-bar {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+
+    .ajax-status {
+        font-size: 14px;
+        font-size: 14px;
+        padding: 20px;
+        font-weight: 100;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: transform .5s ease-in, opacity .5s ease-in;
+
+        &.success {
+            @extend %visible-status-bar;
+            background-color: lighten($green, 70%);
+            color: $green;
+            border: solid 1px lighten($green, 30%);
+        }
+
+        &.error {
+            @extend %visible-status-bar;
+            background-color: lighten($red, 45%);
+            color: $red;
+            border: solid 1px lighten($red, 30%);
+        }
+    }
+}

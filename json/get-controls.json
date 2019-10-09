@@ -1,0 +1,4 @@
+{
+    "boxes": [1, 2, 3, 4, 5, 6, 7,9],
+    "boxLocation": ["Location 1", "Location 2", "Location 3", "Location 4", "Location 5"]
+}
