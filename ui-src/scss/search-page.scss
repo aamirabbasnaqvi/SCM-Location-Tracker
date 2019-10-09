@@ -1,0 +1,22 @@
+@import "./search-bar.scss";
+@import "./results-table.scss";
+
+.search-page {
+
+    %search-title-placeholder {
+        text-align: center;
+        font-size: 20px;
+        font-weight: 100;
+        margin: 50px 0;
+    }
+
+    .search-heading {
+        color: $main-color;
+        @extend %search-title-placeholder;
+    }
+
+    .no-results {
+        color: $red;
+        @extend %search-title-placeholder;
+    }
+}

@@ -1,0 +1,12 @@
+@import "./common-files/mixins.scss";
+@import "./common-files/colors.scss";
+@import "./common-files/typography.scss";
+@import "./common-files/grid.scss";
+@import "./common-files/inputs.scss";
+@import "./common-files/icomoon-fonts.scss";
+
+// components
+@import "./header";
+@import "./common.scss";
+@import "./footer.scss";
+@import "./search-page.scss";

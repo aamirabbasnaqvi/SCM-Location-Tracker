@@ -1,0 +1,51 @@
+.results-table {
+    margin-bottom: 20px;
+
+    .title-row {
+        background-color: $light-gray;
+    }
+
+    border:solid 1px $gray;
+
+    [class*='col-'] {
+        border-right: solid 1px lighten($light-gray, 2%);
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+
+    .title-row {
+        [class*='col-'] {
+            border-right: solid 1px darken($light-gray, 10%);
+
+            &:last-child {
+                border-right: none;
+            }
+        }
+    }
+
+    .flex-row {
+        border-bottom: solid 1px $gray;
+        margin-left: 0;
+        margin-right: 0;
+
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+
+
+    .column-title {
+        font-size: 14px;
+        color: darken($gray, 40%);
+        font-weight: 100;
+    }
+
+    .column-data {
+        font-size: 12px;
+        color: $black;
+        font-weight: 100;
+    }
+
+}

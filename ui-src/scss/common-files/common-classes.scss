@@ -1,0 +1,45 @@
+.hidden,
+.hide {
+    display: none;
+}
+
+.visible,
+.show {
+    display: block;
+}
+
+.hidden-desktop {
+    @include desktop() {
+        display: none;
+    }
+}
+
+.hidden-tab {
+    @include tablet() {
+        display: none;
+    }
+}
+
+.hidden-mobile {
+    @include mobile() {
+        display: none;
+    }
+}
+
+.visible-desktop {
+    @include desktop() {
+        display: block;
+    }
+}
+
+.visible-tab {
+    @include tablet() {
+        display: block;
+    }
+}
+
+.visible-mobile {
+    @include mobile() {
+        display: block;
+    }
+}

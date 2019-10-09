@@ -1,0 +1,60 @@
+.header {
+    background-color: $main-color;
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        display: inline-block;
+        margin-right: auto;
+    }
+
+    .logo-link {
+        text-decoration: none;
+        padding: 10px 0;
+        display: block;
+
+        h1 {
+            font-size: 20px;
+            color: $white;
+            font-size: 20px;
+            font-weight: 100;
+            letter-spacing: .5px;
+        }
+    }
+
+    .menu {
+        ul {
+            list-style-type: none;
+            display: flex;
+        }
+
+        li {
+            margin-right: 20px;
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+
+        a {
+            color: lighten($main-color, 50%);
+            text-decoration: none;
+            padding: 5px;
+            letter-spacing: .5px;
+            font-size: 16px;
+            transition: .3s ease-in color, .3s ease-in border-color;
+            font-weight: 100;
+            border-bottom: solid 2px transparent;
+
+            &.router-link-exact-active,
+            &:hover {
+                color: $white;
+                border-bottom-color: $white;
+            }
+        }
+    }
+}

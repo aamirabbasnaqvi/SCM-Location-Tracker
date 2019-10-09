@@ -1,0 +1,94 @@
+input[type=text] {
+    color: $black;
+}
+
+input::-webkit-input-placeholder {
+    color: $gray !important;
+}
+
+input:-moz-placeholder {
+    color: $gray !important;
+}
+
+input:-ms-input-placeholder {
+    color: $gray !important;
+}
+
+%inputWithFocus {
+    transition: border .3s ease-in, box-shadow .3s ease-in;
+
+    &:focus {
+        box-shadow: 0 0 4px lighten($main-color, 5%);
+        border: solid 1px lighten($main-color, 5%);
+    }
+}
+
+input[type=text],
+input[type=number],
+input[type=email],
+input[type=search],
+input[type=date],
+input[type=datetime-local],
+select,
+textarea {
+    display: inline-block;
+    font-size: 14px;
+    padding: 0 10px;
+    line-height: 40px;
+    outline: 0;
+    box-sizing: border-box;
+    border: solid 1px $gray;
+    height: 40px;
+    background-color: $white;
+
+    @include mobile() {
+        font-size: 16px;
+    }
+
+    @extend %inputWithFocus;
+
+}
+
+// button
+
+.button {
+    font-size: 14px;
+    background-color: $main-color;
+    color: $white;
+
+    line-height: 38px;
+    padding: 0 15px;
+    white-space: nowrap;
+    cursor: pointer;
+    box-sizing: border-box;
+    outline: none;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    border: solid 1px;
+    text-transform: uppercase;
+    transition-duration: .2s;
+    transition-property: background-color, color, box-shadow;
+    transition-timing-function: ease-in;
+
+    &:hover,
+    &:active,
+    &:focus,
+    &.router-link-exact-active {
+        background-color: lighten($main-color, 15%);
+    }
+
+    &:disabled {
+        background-color: #c5c5c5;
+        border-color: #a7a4a4;
+        color: #6f6e6e;
+        cursor: not-allowed;
+    }
+}
+
+.block-level {
+    display: block;
+    width: 100%;
+}

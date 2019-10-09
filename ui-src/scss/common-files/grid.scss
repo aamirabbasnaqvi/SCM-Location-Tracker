@@ -1,0 +1,168 @@
+$gridLimit:12;
+$fixedGridWidth: 1200px;
+$devices: "mobile",
+"tab",
+"desktop";
+
+
+// generating the grid
+@each $device in $devices {
+
+    $mediaQuery: "";
+
+    @if $device=="mobile" {
+        $mediaQuery: "(max-width : 767px)";
+    }
+
+    @else if $device=="tab" {
+        $mediaQuery: "(min-width : 768px) and (max-width : 1199px)";
+    }
+
+    @else if $device=="desktop" {
+        $mediaQuery: "(min-width : 1200px)";
+    }
+
+    $percentage: "%";
+
+    @media #{$mediaQuery} {
+
+        //simple grid
+        @for $j from 1 to $gridLimit+1 {
+            .col-#{$device}-#{$j} {
+                width : $j * 100/$gridLimit#{$percentage};
+                min-height: 1px;
+                flex-basis: $j * 100/$gridLimit#{$percentage};
+                //  flex:0 0 auto;
+                //  -webkit-box-flex: 0;
+            }
+        }
+
+        // offset grid
+        @for $j from 1 to $gridLimit+1 {
+            .col-#{$device}-offset-#{$j} {
+                margin-left : $j * 100/$gridLimit#{$percentage};
+            }
+        }
+
+    }
+}
+
+
+.container,
+.row,
+.narrow-row,
+.wrapper,
+.inner,
+.clear {
+
+    &::after,
+    &::before {
+        content: "";
+        clear: both;
+        display: table;
+    }
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+    box-sizing: border-box;
+
+    margin: 0 auto;
+
+    @include desktop() {
+        width: $fixedGridWidth;
+    }
+}
+
+.flex-row {
+    display: flex;
+    margin-left: -15px;
+    margin-right: -15px;
+    flex-wrap: wrap;
+    flex: 1 0 auto;
+    flex-direction: row;
+    box-sizing: border-box;
+    -webkit-box-direction: normal;
+    clear: both;
+
+
+    [class*="offset-"] {
+        display: flex;
+    }
+}
+
+.narrow-flex-row {
+    margin-left: -10px;
+    margin-right: -10px;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+
+    [class*="col-"] {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+}
+
+.row {
+    display: block;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.narrow-row {
+    display: block;
+    margin-left: -10px;
+    margin-right: -10px;
+
+    [class*="col-"] {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+
+
+[class*="col-"] {
+    min-height: 1px;
+    display: block;
+    padding-left: 15px;
+    padding-right: 15px;
+    //float: left;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    display: block;
+
+    .inner {
+        display: block;
+        margin: auto;
+        box-sizing: border-box;
+
+        @include desktop() {
+            width: $fixedGridWidth;
+        }
+
+    }
+}
+
+
+.wrapper {
+    .inner {
+
+        &::before,
+        &::after,
+        .flex-row::before,
+        .flex-row::after,
+        .row::before,
+        .row::after {
+            display: table;
+            clear: both;
+            content: "";
+            width: 100%;
+        }
+    }
+}
