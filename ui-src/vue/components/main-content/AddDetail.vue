@@ -7,8 +7,8 @@
             <option value selected>From</option>
             <option
               v-for="(fromBoxItem) of shippingControls.boxes"
-              v-bind:value="fromBoxItem"
-              v-text="fromBoxItem"
+              v-bind:value="fromBoxItem.id"
+              v-text="`Box ${fromBoxItem.id}`"
             ></option>
           </select>
         </div>
@@ -17,8 +17,8 @@
             <option value selected>To</option>
             <option
               v-for="(toBoxItem) of shippingControls.boxes"
-              v-bind:value="toBoxItem"
-              v-text="toBoxItem"
+              v-bind:value="toBoxItem.id"
+              v-text="`Box ${toBoxItem.id}`"
             ></option>
           </select>
         </div>
@@ -26,9 +26,9 @@
       <div class="flex-row add-detail-inputs">
         <div class="col-desktop-4 col-desktop-offset-2">
           <select v-model="boxLocation">
-            <option value selected>Location</option>
+            <option value selected>Select Location</option>
             <option
-              v-for="(locationItem) of shippingControls.boxLocation"
+              v-for="(locationItem) of shippingControls.location"
               v-bind:value="locationItem"
               v-text="locationItem"
             ></option>
@@ -44,18 +44,24 @@
         <div class="col-desktop-4 col-desktop-offset-2">
           <button
             class="button"
-            :disabled="!fromBox || (toBox && !packType) || !(toBox || boxLocation)"
+            :disabled="!fromBox || (toBox && !packType) || !boxLocation || (fromBox === toBox)"
           >Save</button>
         </div>
       </div>
     </form>
 
-    <p class="ajax-status" role="alert" v-bind:class="{'success': statusBar.status === 'success' , 'error': statusBar.status === 'error'}" v-text="statusBar.message" ></p>
+    <p
+      class="ajax-status"
+      role="alert"
+      v-bind:class="{'success': statusBar.status === 'success' , 'error': statusBar.status === 'error'}"
+      v-text="statusBar.status === 'success' ? statusBar.successMessage : statusBar.errorMessage"
+    ></p>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import { hostIP } from "../../../js/config";
 
 export default {
   data() {
@@ -66,11 +72,12 @@ export default {
       packType: "",
       shippingControls: {
         boxes: [],
-        boxLocation: []
+        location: []
       },
       statusBar: {
-        message: "",
-        status: ""
+        status: "",
+        errorMessage: "Hey, some problem has occured",
+        successMessage: "Hey, the value has been updated"
       }
     };
   },
@@ -83,27 +90,33 @@ export default {
       const boxLocation = this.boxLocation;
       const packType = this.packType;
 
-      if (!fromBox || (toBox && !packType) || !(toBox || boxLocation)) {
+      if (
+        !fromBox ||
+        (toBox && !packType) ||
+        !boxLocation ||
+        fromBox === toBox
+      ) {
         return;
       }
 
       const self = this;
 
       const data = {
-        boxLocation: self.boxLocation,
+        location: self.boxLocation,
         fromBox: self.fromBox,
         toBox: self.toBox,
-        packType: self.packType
+        packageType: self.packType,
+        state: "inprogress"
       };
 
       axios
-        .post(`/json/save-details.json`, data)
+        .post(`${hostIP}/updateBoxes`, data)
         .then(({ data }) => {
-          this.statusBar = data;
-
-          if (data.status === "success") {
+          if (data.status === "fail") {
+            this.showStatusBar("error", data.errorMessage);
+          } else {
             this.resetControlsSelection();
-            setTimeout(this.resetStatusBarData, 5000);
+            this.showStatusBar("success");
           }
         })
         .catch(function(exception) {
@@ -113,21 +126,27 @@ export default {
           // app.globalFlags.pageIsLoading = false;
         });
     },
+    showStatusBar: function(status = "error", message) {
+      this.statusBar.status = status;
+
+      if (status === "error" && message) {
+        this.statusBar.errorMessage = message;
+      }
+
+      setTimeout(() => {
+        this.statusBar.status = "";
+      }, 5000);
+    },
     resetControlsSelection() {
       this.boxLocation = "";
       this.fromBox = "";
       this.toBox = "";
       this.packType = "";
     },
-    resetStatusBarData() {
-      this.statusBar = {
-        message: "",
-        status: ""
-      };
-    },
+    hideStatusBar() {},
     getShippingControls() {
       axios
-        .post(`/json/get-controls.json`)
+        .get(`${hostIP}/initialData`)
         .then(({ data }) => {
           this.shippingControls = data;
         })

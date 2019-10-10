@@ -23,7 +23,8 @@
         font-weight: 100;
         opacity: 0;
         transform: translateY(50px);
-        transition: transform .5s ease-in, opacity .5s ease-in;
+        background-color: $white;
+        transition: transform .5s ease-in, opacity .5s ease-in, background-color .5s ease-in;
 
         &.success {
             @extend %visible-status-bar;
