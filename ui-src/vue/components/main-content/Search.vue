@@ -1,11 +1,6 @@
 <template>
   <div class="container page-container search-page">
-    <form
-      class="search-bar flex-row"
-      action="/dictionary/"
-      method="get"
-      v-on:submit="submitSearchForm"
-    >
+    <form class="search-bar flex-row" method="get" v-on:submit="submitSearchForm">
       <div class="col-desktop-4">
         <input v-model="timestamp" type="datetime-local" placeholder="Timestamp" step="1" />
       </div>
